@@ -1,0 +1,1 @@
+﻿# OneForAll.EFCore 仓储类库
