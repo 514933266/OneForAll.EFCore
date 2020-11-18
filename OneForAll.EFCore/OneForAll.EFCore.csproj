@@ -10,8 +10,9 @@
     <Company>xhp</Company>
     <Description>Based on the EFCore,Repository</Description>
     <Copyright>xhp</Copyright>
-    <PackageProjectUrl>https://github.com/514933266/OneForAll_Framework.git</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/514933266/OneForAll.EFCore</PackageProjectUrl>
     <PackageLicenseExpression></PackageLicenseExpression>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
