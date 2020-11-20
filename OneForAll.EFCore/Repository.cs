@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OneForAll.Core.ORM;
 using System;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace OneForAll.EFCore
@@ -45,16 +45,39 @@ namespace OneForAll.EFCore
 
         protected Expression<Func<T, bool>> Equal<TProperty>(Expression<Func<T, TProperty>> selector, TProperty key)
         {
-            MemberExpression left = selector.Body as MemberExpression;
-            ConstantExpression right = Expression.Constant(key, typeof(TProperty));
-            return Expression.Lambda<Func<T, bool>>(Expression.Equal(left, right), selector.Parameters);
+            return BuildBinaryWhere(selector, key, Expression.Equal);
         }
 
         protected Expression<Func<T, bool>> NotEqual<TProperty>(Expression<Func<T, TProperty>> selector, TProperty key)
         {
+            return BuildBinaryWhere(selector, key, Expression.NotEqual);
+        }
+
+        protected Expression<Func<T, bool>> GreaterThan<TProperty>(Expression<Func<T, TProperty>> selector, TProperty key)
+        {
+            return BuildBinaryWhere(selector, key, Expression.GreaterThan);
+        }
+
+        protected Expression<Func<T, bool>> GreaterThanOrEqual<TProperty>(Expression<Func<T, TProperty>> selector, TProperty key)
+        {
+            return BuildBinaryWhere(selector, key, Expression.GreaterThanOrEqual);
+        }
+
+        protected Expression<Func<T, bool>> LessThan<TProperty>(Expression<Func<T, TProperty>> selector, TProperty key)
+        {
+            return BuildBinaryWhere(selector, key, Expression.LessThan);
+        }
+
+        protected Expression<Func<T, bool>> LessThanOrEqual<TProperty>(Expression<Func<T, TProperty>> selector, TProperty key)
+        {
+            return BuildBinaryWhere(selector, key, Expression.LessThanOrEqual);
+        }
+
+        private Expression<Func<T, bool>> BuildBinaryWhere<TProperty>(Expression<Func<T, TProperty>> selector, TProperty key, Func<Expression, Expression, Expression> func)
+        {
             MemberExpression left = selector.Body as MemberExpression;
             ConstantExpression right = Expression.Constant(key, typeof(TProperty));
-            return Expression.Lambda<Func<T, bool>>(Expression.NotEqual(left, right), selector.Parameters);
+            return Expression.Lambda<Func<T, bool>>(func(left, right), selector.Parameters);
         }
 
         protected Expression<Func<T, bool>> Contains<TProperty>(Expression<Func<T, TProperty>> selector, TProperty key)
@@ -69,34 +92,6 @@ namespace OneForAll.EFCore
             MemberExpression left = selector.Body as MemberExpression;
             ConstantExpression right = Expression.Constant(key, typeof(TProperty));
             return Expression.Lambda<Func<T, bool>>(Expression.Not(Expression.Call(left, typeof(TProperty).GetMethod("Contains", new Type[] { typeof(TProperty) }), right)), selector.Parameters);
-        }
-
-        protected Expression<Func<T, bool>> GreaterThan<TProperty>(Expression<Func<T, TProperty>> selector, TProperty key)
-        {
-            MemberExpression left = selector.Body as MemberExpression;
-            ConstantExpression right = Expression.Constant(key, typeof(TProperty));
-            return Expression.Lambda<Func<T, bool>>(Expression.GreaterThan(left, right), selector.Parameters);
-        }
-
-        protected Expression<Func<T, bool>> GreaterThanOrEqual<TProperty>(Expression<Func<T, TProperty>> selector, TProperty key)
-        {
-            MemberExpression left = selector.Body as MemberExpression;
-            ConstantExpression right = Expression.Constant(key, typeof(TProperty));
-            return Expression.Lambda<Func<T, bool>>(Expression.GreaterThanOrEqual(left, right), selector.Parameters);
-        }
-
-        protected Expression<Func<T, bool>> LessThan<TProperty>(Expression<Func<T, TProperty>> selector, TProperty key)
-        {
-            MemberExpression left = selector.Body as MemberExpression;
-            ConstantExpression right = Expression.Constant(key, typeof(TProperty));
-            return Expression.Lambda<Func<T, bool>>(Expression.LessThan(left, right), selector.Parameters);
-        }
-
-        protected Expression<Func<T, bool>> LessThanOrEqual<TProperty>(Expression<Func<T, TProperty>> selector, TProperty key)
-        {
-            MemberExpression left = selector.Body as MemberExpression;
-            ConstantExpression right = Expression.Constant(key, typeof(TProperty));
-            return Expression.Lambda<Func<T, bool>>(Expression.LessThanOrEqual(left, right), selector.Parameters);
         }
 
         protected Expression<Func<T, bool>> Range<TProperty>(Expression<Func<T, TProperty>> selector, TProperty key1, TProperty key2)

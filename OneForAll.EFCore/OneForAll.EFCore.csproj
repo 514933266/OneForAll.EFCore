@@ -1,18 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <ApplicationIcon />
     <OutputType>Library</OutputType>
     <StartupObject />
     <AssemblyName>OneForAll.EFCore</AssemblyName>
     <Authors>xhp</Authors>
     <Company>xhp</Company>
-    <Description>Based on the EFCore,Repository</Description>
+    <Description>Based on net5.0 EFCore,Repository</Description>
     <Copyright>xhp</Copyright>
     <PackageProjectUrl>https://github.com/514933266/OneForAll.EFCore</PackageProjectUrl>
     <PackageLicenseExpression></PackageLicenseExpression>
-    <Version>1.0.1</Version>
+    <Version>1.0.2-net5.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
