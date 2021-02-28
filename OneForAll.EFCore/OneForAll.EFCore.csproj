@@ -12,7 +12,9 @@
     <Copyright>xhp</Copyright>
     <PackageProjectUrl>https://github.com/514933266/OneForAll.EFCore</PackageProjectUrl>
     <PackageLicenseExpression></PackageLicenseExpression>
-    <Version>1.0.2-net5.0</Version>
+    <Version>1.0.2.1</Version>
+    <AssemblyVersion>1.0.2.1</AssemblyVersion>
+    <FileVersion>1.0.2.1</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
