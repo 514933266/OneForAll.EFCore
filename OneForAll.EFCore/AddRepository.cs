@@ -10,23 +10,44 @@ namespace OneForAll.EFCore
 {
     partial class Repository<T>
     {
+        /// <summary>
+        /// 添加
+        /// </summary>
+        /// <param name="entity">实体</param>
+        /// <returns>影响行数</returns>
         public virtual async Task<int> AddAsync(T entity)
         {
             DbSet.Add(entity);
             return await SaveChangesAsync();
         }
+
+        /// <summary>
+        /// 添加（批量）
+        /// </summary>
+        /// <param name="entities">实体</param>
+        /// <returns>影响行数</returns>
         public virtual async Task<int> AddRangeAsync(IEnumerable<T> entities)
         {
             DbSet.AddRange(entities);
             return await SaveChangesAsync();
         }
 
+        /// <summary>
+        /// 批量插入
+        /// </summary>
+        /// <param name="entities">实体</param>
+        /// <returns>影响行数</returns>
         public virtual async Task<int> BulkInsertAsync(IList<T> entities)
         {
             Context.BulkInsert(entities);
             return await SaveChangesAsync();
         }
 
+        /// <summary>
+        /// 添加
+        /// </summary>
+        /// <param name="entity">实体</param>
+        /// <param name="tran">事务</param>
         public virtual void Add(T entity, IUnitTransaction tran)
         {
             tran.Register(() =>
@@ -36,6 +57,11 @@ namespace OneForAll.EFCore
             }, Context);
         }
 
+        /// <summary>
+        /// 添加（批量）
+        /// </summary>
+        /// <param name="entities">实体</param>
+        /// <param name="tran">事务</param>
         public virtual void AddList(IEnumerable<T> entities, IUnitTransaction tran)
         {
             tran.Register(() =>
@@ -45,6 +71,12 @@ namespace OneForAll.EFCore
             }, Context);
         }
 
+        /// <summary>
+        /// 添加
+        /// </summary>
+        /// <param name="entity">实体</param>
+        /// <param name="predicate">条件</param>
+        /// <param name="tran">事务</param>
         public virtual void AddIfNotExists(T entity, Expression<Func<T, bool>> predicate, IUnitTransaction tran)
         {
             tran.Register(() =>

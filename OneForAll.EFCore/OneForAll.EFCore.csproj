@@ -8,13 +8,13 @@
     <AssemblyName>OneForAll.EFCore</AssemblyName>
     <Authors>xhp</Authors>
     <Company>xhp</Company>
-    <Description>Based on net5.0 EFCore,Repository</Description>
+    <Description>OneForAll系列ORM：基于 EFCore</Description>
     <Copyright>xhp</Copyright>
     <PackageProjectUrl>https://github.com/514933266/OneForAll.EFCore</PackageProjectUrl>
     <PackageLicenseExpression></PackageLicenseExpression>
-    <Version>1.0.2.1</Version>
-    <AssemblyVersion>1.0.2.1</AssemblyVersion>
-    <FileVersion>1.0.2.1</FileVersion>
+    <Version>1.0.2.2</Version>
+    <AssemblyVersion>1.0.2.2</AssemblyVersion>
+    <FileVersion>1.0.2.2</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
