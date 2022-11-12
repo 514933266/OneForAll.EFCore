@@ -5,38 +5,43 @@ using System.Collections.Generic;
 
 namespace OneForAll.EFCore
 {
+    /// <summary>
+    /// 工作单元
+    /// </summary>
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
         private bool _commited;
         private int _effected = 0;
-        private readonly TransactionType _transactionType;
         private HashSet<IUnitTransaction> _transactions;
 
         public HashSet<Exception> Exceptions { get; set; }
 
-        public UnitOfWork(TransactionType transactionType = TransactionType.Local)
+        public UnitOfWork()
         {
-            _transactionType = transactionType;
             _transactions = new HashSet<IUnitTransaction>();
-
             Exceptions = new HashSet<Exception>();
         }
 
-        public IUnitTransaction BeginTransaction()
+        public IUnitTransaction BeginTransaction(TransactionType transactionType = TransactionType.Local)
         {
-            var tran = new UnitTransaction(this);
+            IUnitTransaction tran = null;
+            switch (transactionType)
+            {
+                case TransactionType.Local:
+                    tran = new UnitTransaction(this);
+                    break;
+                default:
+                    throw new Exception("暂不支持创建除本地事务外的其他事务类型");
+            }
             _transactions.Add(tran);
             return tran;
         }
 
         public void Dispose()
         {
-            if (_transactions != null)
+            foreach (var tran in _transactions)
             {
-                foreach (var tran in _transactions)
-                {
-                    tran.Dispose();
-                }
+                tran.Dispose();
             }
         }
 
@@ -55,7 +60,7 @@ namespace OneForAll.EFCore
                     {
                         if (!tran.Commited)
                         {
-                            var effected = tran.Commit(_transactionType);
+                            var effected = tran.Commit();
                         }
                     }
                 }
@@ -80,5 +85,4 @@ namespace OneForAll.EFCore
             }
         }
     }
-
 }

@@ -4,29 +4,32 @@ using OneForAll.Core.ORM;
 using System;
 using System.Collections.Generic;
 using OneForAll.Core.Extension;
+using System.Transactions;
 
 namespace OneForAll.EFCore
 {
+    /// <summary>
+    /// 单元事务
+    /// </summary>
     public class UnitTransaction : IUnitTransaction
     {
         private int _effected = 0;
-        private readonly IUnitOfWork _uow;
-        private readonly List<IUnitAction> _actions;
-
         private IDbContextTransaction _tran;
-        
+
+        private readonly IUnitOfWork _uow;
+
+
         public bool Commited { get; set; }
 
         public UnitTransaction(IUnitOfWork uow)
         {
             _uow = uow;
-            _actions = new List<IUnitAction>();
         }
 
         public void Register<T>(Func<int> action, T conn)
         {
-            _actions.Add(new UnitAction(action));
             BeginDbTransaction(conn);
+            _effected += action();
         }
 
         private void BeginDbTransaction<T>(T conn)
@@ -38,53 +41,38 @@ namespace OneForAll.EFCore
             }
         }
 
-        public int Commit(TransactionType transactionType = TransactionType.Local)
+        public int Commit()
         {
             if (Commited)
             {
-                throw new InvalidOperationException("Duplicate commit transactions are prohibited!");
+                throw new InvalidOperationException("事务已经提交，无法重复提交!");
             }
             else
             {
                 Commited = true;
-                switch (transactionType)
+                try
                 {
-                    case TransactionType.Local: CommitLocalTran(_actions); break;
-                    default:
-                        throw new Exception("Unsupported transaction type!");
+                    _tran.Commit();
+                }
+                catch (Exception ex)
+                {
+                    _effected = 0;
+                    _uow.Exceptions.Add(ex);
                 }
             }
             return _effected;
         }
 
-        private void CommitLocalTran(IEnumerable<IUnitAction> actions)
-        {
-            try
-            {
-                actions.ForEach(a =>
-                {
-                    _effected += a.Action();
-                });
-                // Commit transaction if all commands succeed, transaction will auto-rollback
-                // when disposed if either commands fails
-                _tran.Commit();
-            }
-            catch (Exception ex)
-            {
-                _effected = 0;
-                _uow.Exceptions.Add(ex);
-            }
-        }
-
         public void Dispose()
         {
-            if (_tran != null) _tran.Dispose();
+            if (_tran != null)
+                _tran.Dispose();
         }
 
         public void RollBack()
         {
-            if (_tran != null) _tran.Rollback();
+            if (_tran != null)
+                _tran.Rollback();
         }
     }
-
 }
