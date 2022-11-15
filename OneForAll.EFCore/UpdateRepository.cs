@@ -9,11 +9,74 @@ using OneForAll.Core.Utility;
 using OneForAll.Core.Extension;
 using EFCore.BulkExtensions;
 using System.Threading.Tasks;
+using OneForAll.Core.DDD;
 
 namespace OneForAll.EFCore
 {
-    partial class Repository<T>
+    public partial class Repository<T>
     {
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <param name="entity">实体</param>
+        /// <returns>影响行数</returns>
+        public virtual int Update(T entity)
+        {
+            DbSet.Update(entity);
+            return SaveChanges();
+        }
+
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <param name="entities">实体</param>
+        /// <returns>影响行数</returns>
+        public virtual int Update(IEnumerable<T> entities)
+        {
+            DbSet.UpdateRange(entities);
+            return SaveChanges();
+        }
+
+        /// <summary>
+        /// 批量更新
+        /// </summary>
+        /// <param name="entities">实体</param>
+        /// <returns>影响行数</returns>
+        public virtual int BulkUpdate(IList<T> entities)
+        {
+            Context.BulkUpdate(entities);
+            return SaveChanges();
+        }
+
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <param name="entity">实体</param>
+        /// <param name="tran">事务</param>
+        public virtual void Update(T entity, IUnitTransaction tran)
+        {
+            tran.Register(() =>
+            {
+                DbSet.Update(entity);
+                return SaveChanges();
+            }, Context);
+        }
+
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <param name="entities">实体</param>
+        /// <param name="tran">事务</param>
+        public virtual void Update(IEnumerable<T> entities, IUnitTransaction tran)
+        {
+            tran.Register(() =>
+            {
+                DbSet.UpdateRange(entities);
+                return SaveChanges();
+            }, Context);
+        }
+
+
         /// <summary>
         /// 修改
         /// </summary>
@@ -52,12 +115,26 @@ namespace OneForAll.EFCore
         /// </summary>
         /// <param name="entity">实体</param>
         /// <param name="tran">事务</param>
-        public virtual void Update(T entity, IUnitTransaction tran)
+        public virtual async Task UpdateAsync(T entity, IUnitTransaction tran)
         {
-            tran.Register(() =>
+            await tran.RegisterAsync(async () =>
             {
                 DbSet.Update(entity);
-                return SaveChanges();
+                return await SaveChangesAsync();
+            }, Context);
+        }
+
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <param name="entities">实体</param>
+        /// <param name="tran">事务</param>
+        public virtual async Task UpdateAsync(IEnumerable<T> entities, IUnitTransaction tran)
+        {
+            await tran.RegisterAsync(async () =>
+            {
+                DbSet.UpdateRange(entities);
+                return await SaveChangesAsync();
             }, Context);
         }
     }

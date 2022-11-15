@@ -2,6 +2,7 @@
 using OneForAll.Core.ORM;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OneForAll.EFCore
 {
@@ -61,6 +62,35 @@ namespace OneForAll.EFCore
                         if (!tran.Commited)
                         {
                             var effected = tran.Commit();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _effected = 0;
+                    Exceptions.Add(ex);
+                    RollBack();
+                }
+            }
+            return _effected;
+        }
+
+        public async Task<int> CommitAsync()
+        {
+            if (_commited)
+            {
+                throw new InvalidOperationException("Duplicate units of work are prohibited!");
+            }
+            else
+            {
+                _commited = true;
+                try
+                {
+                    foreach (var tran in _transactions)
+                    {
+                        if (!tran.Commited)
+                        {
+                            _effected += await tran.CommitAsync();
                         }
                     }
                 }
