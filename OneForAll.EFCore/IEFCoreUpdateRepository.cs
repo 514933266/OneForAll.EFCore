@@ -24,7 +24,7 @@ namespace OneForAll.EFCore
         /// </summary>
         /// <param name="entities">实体</param>
         /// <returns>影响行数</returns>
-        int Update(IEnumerable<T> entities);
+        int UpdateRange(IEnumerable<T> entities);
 
         /// <summary>
         /// 批量更新
@@ -45,7 +45,7 @@ namespace OneForAll.EFCore
         /// </summary>
         /// <param name="entities">实体</param>
         /// <param name="tran">事务</param>
-        void Update(IEnumerable<T> entities, IUnitTransaction tran);
+        void UpdateRange(IEnumerable<T> entities, IUnitTransaction tran);
 
         /// <summary>
         /// 修改
@@ -59,7 +59,7 @@ namespace OneForAll.EFCore
         /// </summary>
         /// <param name="entities">实体</param>
         /// <returns>影响行数</returns>
-        Task<int> UpdateAsync(IEnumerable<T> entities);
+        Task<int> UpdateRangeAsync(IEnumerable<T> entities);
 
         /// <summary>
         /// 修改
@@ -73,6 +73,6 @@ namespace OneForAll.EFCore
         /// </summary>
         /// <param name="entities">实体</param>
         /// <param name="tran">事务</param>
-        Task UpdateAsync(IEnumerable<T> entities, IUnitTransaction tran);
+        Task UpdateRangeAsync(IEnumerable<T> entities, IUnitTransaction tran);
     }
 }

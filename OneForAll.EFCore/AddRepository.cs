@@ -27,7 +27,7 @@ namespace OneForAll.EFCore
         /// </summary>
         /// <param name="entities">实体</param>
         /// <returns>影响行数</returns>
-        public virtual int Add(IEnumerable<T> entities)
+        public virtual int AddRange(IEnumerable<T> entities)
         {
             DbSet.AddRange(entities);
             return SaveChanges();
@@ -63,7 +63,7 @@ namespace OneForAll.EFCore
         /// </summary>
         /// <param name="entities">实体</param>
         /// <param name="tran">事务</param>
-        public virtual void Add(IEnumerable<T> entities, IUnitTransaction tran)
+        public virtual void AddRange(IEnumerable<T> entities, IUnitTransaction tran)
         {
             tran.Register(() =>
             {
@@ -107,7 +107,7 @@ namespace OneForAll.EFCore
         /// </summary>
         /// <param name="entities">实体</param>
         /// <returns>影响行数</returns>
-        public virtual async Task<int> AddAsync(IEnumerable<T> entities)
+        public virtual async Task<int> AddRangeAsync(IEnumerable<T> entities)
         {
             DbSet.AddRange(entities);
             return await SaveChangesAsync();
@@ -143,7 +143,7 @@ namespace OneForAll.EFCore
         /// </summary>
         /// <param name="entities">实体</param>
         /// <param name="tran">事务</param>
-        public virtual async Task AddAsync(IEnumerable<T> entities, IUnitTransaction tran)
+        public virtual async Task AddRangeAsync(IEnumerable<T> entities, IUnitTransaction tran)
         {
             await tran.RegisterAsync(async () =>
             {

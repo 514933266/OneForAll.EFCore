@@ -47,7 +47,7 @@ namespace OneForAll.EFCore
         /// <param name="entities">实体</param>
         /// <param name="tran">事务</param>
         /// <returns>影响行数</returns>
-        void Delete(IEnumerable<T> entities, IUnitTransaction tran);
+        void DeleteRange(IEnumerable<T> entities, IUnitTransaction tran);
 
         /// <summary>
         /// 删除
@@ -83,6 +83,6 @@ namespace OneForAll.EFCore
         /// <param name="entities">实体</param>
         /// <param name="tran">事务</param>
         /// <returns>影响行数</returns>
-        Task DeleteAsync(IEnumerable<T> entities, IUnitTransaction tran);
+        Task DeleteRangeAsync(IEnumerable<T> entities, IUnitTransaction tran);
     }
 }

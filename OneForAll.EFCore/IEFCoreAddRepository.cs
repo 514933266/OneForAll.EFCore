@@ -25,7 +25,7 @@ namespace OneForAll.EFCore
         /// </summary>
         /// <param name="entities">实体</param>
         /// <returns>影响行数</returns>
-        int Add(IEnumerable<T> entities);
+        int AddRange(IEnumerable<T> entities);
 
         /// <summary>
         /// 批量插入
@@ -46,7 +46,7 @@ namespace OneForAll.EFCore
         /// </summary>
         /// <param name="entities">实体</param>
         /// <param name="tran">事务</param>
-        void Add(IEnumerable<T> entities, IUnitTransaction tran);
+        void AddRange(IEnumerable<T> entities, IUnitTransaction tran);
 
         /// <summary>
         /// 添加
@@ -68,7 +68,7 @@ namespace OneForAll.EFCore
         /// </summary>
         /// <param name="entities">实体</param>
         /// <returns>影响行数</returns>
-        Task<int> AddAsync(IEnumerable<T> entities);
+        Task<int> AddRangeAsync(IEnumerable<T> entities);
 
         /// <summary>
         /// 批量插入
@@ -89,7 +89,7 @@ namespace OneForAll.EFCore
         /// </summary>
         /// <param name="entities">实体</param>
         /// <param name="tran">事务</param>
-        Task AddAsync(IEnumerable<T> entities, IUnitTransaction tran);
+        Task AddRangeAsync(IEnumerable<T> entities, IUnitTransaction tran);
 
     }
 }
