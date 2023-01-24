@@ -28,7 +28,7 @@ namespace OneForAll.EFCore
         /// </summary>
         /// <param name="entities">实体</param>
         /// <returns>影响行数</returns>
-        public virtual int Delete(IEnumerable<T> entities)
+        public virtual int DeleteRange(IEnumerable<T> entities)
         {
             DbSet.RemoveRange(entities);
             return SaveChanges();
