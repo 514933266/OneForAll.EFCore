@@ -61,7 +61,7 @@ namespace OneForAll.EFCore
         /// </summary>
         /// <param name="entities">实体</param>
         /// <returns>影响行数</returns>
-        Task<int> DeleteAsync(IEnumerable<T> entities);
+        Task<int> DeleteRangeAsync(IEnumerable<T> entities);
 
         /// <summary>
         /// 批量删除

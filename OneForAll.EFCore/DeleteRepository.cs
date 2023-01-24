@@ -89,7 +89,7 @@ namespace OneForAll.EFCore
         /// </summary>
         /// <param name="entities">实体</param>
         /// <returns>影响行数</returns>
-        public virtual async Task<int> DeleteAsync(IEnumerable<T> entities)
+        public virtual async Task<int> DeleteRangeAsync(IEnumerable<T> entities)
         {
             DbSet.RemoveRange(entities);
             return await SaveChangesAsync();
