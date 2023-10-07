@@ -23,14 +23,21 @@ namespace OneForAll.EFCore
         /// <summary>
         /// 查询指定实体
         /// </summary>
-        /// <param name="predicate"></param>
+        /// <param name="predicate">where条件</param>
         /// <returns></returns>
         public virtual async Task<T> GetAsync(Expression<Func<T, bool>> predicate)
         {
-            return await DbSet
-                .AsNoTracking()
-                .Where(predicate)
-                .FirstOrDefaultAsync();
+            return await DbSet.Where(predicate).FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// 统计数量
+        /// </summary>
+        /// <param name="predicate">where条件</param>
+        /// <returns></returns>
+        public virtual async Task<int> CountAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await DbSet.CountAsync(predicate);
         }
 
         /// <summary>
@@ -53,7 +60,7 @@ namespace OneForAll.EFCore
         /// </summary>
         /// <param name="pageIndex">页码</param>
         /// <param name="pageSize">页数</param>
-        /// <param name="predicate">条件</param>
+        /// <param name="predicate">where条件</param>
         /// <returns>分页列表</returns>
         public virtual async Task<IEnumerable<T>> GetPageAsync(int pageIndex, int pageSize, Expression<Func<T, bool>> predicate)
         {
@@ -71,22 +78,17 @@ namespace OneForAll.EFCore
         /// <returns>列表</returns>
         public virtual async Task<IEnumerable<T>> GetListAsync()
         {
-            return await DbSet
-                .AsNoTracking()
-                .ToListAsync();
+            return await DbSet.ToListAsync();
         }
 
         /// <summary>
         /// 查询列表
         /// </summary>
-        /// <param name="predicate">条件</param>
+        /// <param name="predicate">where条件</param>
         /// <returns>列表</returns>
         public virtual async Task<IEnumerable<T>> GetListAsync(Expression<Func<T, bool>> predicate)
         {
-            return await DbSet
-                .AsNoTracking()
-                .Where(predicate)
-                .ToListAsync();
+            return await DbSet.Where(predicate).ToListAsync();
         }
     }
 }
