@@ -34,6 +34,13 @@ namespace OneForAll.EFCore
         Task<T> GetAsync(Expression<Func<T, bool>> predicate);
 
         /// <summary>
+        /// 统计数量
+        /// </summary>
+        /// <param name="predicate">where条件</param>
+        /// <returns></returns>
+        Task<int> CountAsync(Expression<Func<T, bool>> predicate);
+
+        /// <summary>
         /// 查询分页
         /// </summary>
         /// <param name="pageIndex">页码</param>
