@@ -12,16 +12,38 @@ namespace OneForAll.EFCore
     /// </summary>
     public static class OrderByExtention
     {
+        /// <summary>
+        /// 顺序
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="query"></param>
+        /// <param name="propertyName">字段名</param>
+        /// <returns></returns>
         public static IOrderedQueryable<T> OrderBy<T>(this IQueryable<T> query, string propertyName)
         {
             return OrderBy(query, propertyName, false);
         }
 
+        /// <summary>
+        /// 倒序
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="query"></param>
+        /// <param name="propertyName">字段名</param>
+        /// <returns></returns>
         public static IOrderedQueryable<T> OrderByDescending<T>(this IQueryable<T> query, string propertyName)
         {
             return OrderBy(query, propertyName, true);
         }
 
+        /// <summary>
+        /// 排序
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="query"></param>
+        /// <param name="propertyName">字段名</param>
+        /// <param name="sortType">排序类型 desc asc</param>
+        /// <returns></returns>
         public static IOrderedQueryable<T> OrderBy<T>(this IQueryable<T> query, string propertyName, string sortType)
         {
             var isDesc = false;
@@ -29,6 +51,15 @@ namespace OneForAll.EFCore
             return OrderBy(query, propertyName, isDesc);
         }
 
+        /// <summary>
+        /// 排序
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="query"></param>
+        /// <param name="propertyName">字段名</param>
+        /// <param name="isDesc">是否倒序</param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static IOrderedQueryable<T> OrderBy<T>(IQueryable<T> query, string propertyName, bool isDesc)
         {
             var properties = new List<PropertyInfo>();
@@ -57,11 +88,28 @@ namespace OneForAll.EFCore
             return (IOrderedQueryable<T>)method.Invoke(null, new object[] { query, properties });
         }
 
-        private static IOrderedQueryable<T> OrderBy<T, TProp>(IQueryable<T> query, IEnumerable<PropertyInfo> properties)
+        /// <summary>
+        /// 多字段顺序
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TProp"></typeparam>
+        /// <param name="query"></param>
+        /// <param name="properties">排序字段集合</param>
+        /// <returns></returns>
+        public static IOrderedQueryable<T> OrderBy<T, TProp>(IQueryable<T> query, IEnumerable<PropertyInfo> properties)
         {
             return query.OrderBy(GetLamba<T, TProp>(properties));
         }
-        private static IOrderedQueryable<T> OrderByDescending<T, TProp>(IQueryable<T> query, IEnumerable<PropertyInfo> properties)
+
+        /// <summary>
+        /// 多字段倒序
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TProp"></typeparam>
+        /// <param name="query"></param>
+        /// <param name="properties">排序字段集合</param>
+        /// <returns></returns>
+        public static IOrderedQueryable<T> OrderByDescending<T, TProp>(IQueryable<T> query, IEnumerable<PropertyInfo> properties)
         {
             return query.OrderByDescending(GetLamba<T, TProp>(properties));
         }

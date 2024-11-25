@@ -11,7 +11,7 @@ namespace OneForAll.EFCore
     /// <summary>
     /// 删除
     /// </summary>
-    public interface IEFCoreDeleteRepository<T>
+    public interface IEFCoreDeleteRepository<T> where T : class, new()
     {
         /// <summary>
         /// 删除
