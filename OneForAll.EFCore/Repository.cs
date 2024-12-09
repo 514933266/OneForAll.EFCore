@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OneForAll.Core.Extension;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,46 +18,64 @@ namespace OneForAll.EFCore
         /// <summary>
         /// 当前连接
         /// </summary>
-        public DbContext Context { get; set; }
+        public DbContext Context { get; private set; }
 
         /// <summary>
         /// 当前表
         /// </summary>
-        public DbSet<T> DbSet { get; set; }
+        public DbSet<T> DbSet { get; private set; }
 
         /// <summary>
         /// 当前只读连接
         /// </summary>
-        public IEFCoreSelectRepository<T> Readonly { get; set; }
+        public ISelectRepository<T> Readonly => Readonlys.FirstOrDefault();
 
         /// <summary>
         /// 只读连接集合
         /// </summary>
-        public List<IEFCoreSelectRepository<T>> Readonlys { get; set; } = new List<IEFCoreSelectRepository<T>>();
+        public List<ISelectRepository<T>> Readonlys { get; } = new List<ISelectRepository<T>>();
 
+        // 上下文集合
+        private List<DbContext> Contexts { get; set; }
+
+        #region 构造初始化
         public Repository(DbContext context)
         {
-            Context = context;
-            DbSet = Context.Set<T>();
+            Contexts = new List<DbContext>() { context };
+            SetContext();
         }
 
         public Repository(List<DbContext> contexts)
         {
-            if (contexts != null && contexts.Count > 0)
+            Contexts = contexts;
+            if (contexts.Count > 0)
             {
-                // 取第一条作为主库
-                Context = contexts.First();
-                DbSet = Context.Set<T>();
-                // 其余为从库
-                for (int i = 1; i < contexts.Count; i++)
-                {
-                    var repository = new Repository<T>(contexts[i]) as IEFCoreSelectRepository<T>;
-                    if (Readonly == null)
-                        Readonly = repository;
-                    Readonlys.Add(repository);
-                }
+                SetContext();
+                SetReadonly();
             }
         }
+
+        // 默认库
+        private void SetContext()
+        {
+            if (Context == null)
+            {
+                Context = Contexts.FirstOrDefault();
+                DbSet = Context?.Set<T>();
+            }
+        }
+
+        // 只读库
+        private void SetReadonly()
+        {
+            for (int i = 1; i < Contexts.Count; i++)
+            {
+                var repository = new Repository<T>(Contexts[i]) as ISelectRepository<T>;
+                Readonlys.Add(repository);
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// 执行sql语句

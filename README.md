@@ -1,9 +1,11 @@
 ﻿# OneForAll.EFCore
 
 <br>
-基于EF Core进行二次封装的ORM类库，帮助开发人员快速实现仓储层相关功能（增、删、查、改、工作单元、跨库事务、读写分离）
+本框架为基于EF Core进行二次封装的ORM，用于帮助开发人员快速实现仓储层相关功能（增、删、查、改、工作单元、跨库事务、读写分离）
+<br>
+由于EF已经相当完善且有微软官方团队全力维护，因此本框架不会过度封装（整体用法与EF保持高度一致），因此，与其他框架不同的是可以避免更多由于EF更新导致的冲突问题，可以放心使用
 
-### Automapper注入
+### 通过Autofac注入
 
 ```C#
 
@@ -53,6 +55,18 @@ var items = await DbSet
                 .ThenByDescending(e => e.CreateTime)
                 .ToListAsync();
 ```
+
+### 事务
+```C#
+using (var tran = new UnitOfWork().BeginTransaction())
+{
+    await _repository.AddAsync(new Order { ProductName = "订单", TotalPrice = 0.01m, CreateTime = DateTime.Now }, tran);
+    await _repository2.AddAsync(new Order { ProductName = "订单明细", TotalPrice = 0.01m, CreateTime = DateTime.Now }, tran);
+    var effected = tran.Commit();
+}
+```
+<br>
+
 
 ### 读写分离
 

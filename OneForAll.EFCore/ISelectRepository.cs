@@ -10,7 +10,7 @@ namespace OneForAll.EFCore
     /// <summary>
     /// 查询
     /// </summary>
-    public interface IEFCoreSelectRepository<T> where T : class, new()
+    public interface ISelectRepository<T> where T : class, new()
     {
         /// <summary>
         /// 查询指定实体(追踪)

@@ -10,7 +10,7 @@ namespace OneForAll.EFCore
     /// <summary>
     /// 更新
     /// </summary>
-    public interface IEFCoreUpdateRepository<T> where T : class, new()
+    public interface IUpdateRepository<T> where T : class, new()
     {
         /// <summary>
         /// 修改

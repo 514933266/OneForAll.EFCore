@@ -11,27 +11,27 @@ namespace OneForAll.EFCore
     /// EFCore仓储
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IEFCoreRepository<T> : IEFCoreSelectRepository<T>, IEFCoreAddRepository<T>, IEFCoreUpdateRepository<T>, IEFCoreDeleteRepository<T> where T : class, new()
+    public interface IEFCoreRepository<T> : ISelectRepository<T>, IAddRepository<T>, IUpdateRepository<T>, IDeleteRepository<T> where T : class, new()
     {
         /// <summary>
         /// 当前连接
         /// </summary>
-        DbContext Context { get; set; }
+        DbContext Context { get; }
 
         /// <summary>
         /// 当前表
         /// </summary>
-        DbSet<T> DbSet { get; set; }
+        DbSet<T> DbSet { get; }
 
         /// <summary>
         /// 当前只读连接
         /// </summary>
-        IEFCoreSelectRepository<T> Readonly { get; set; }
+        ISelectRepository<T> Readonly { get; }
 
         /// <summary>
         /// 只读连接集合
         /// </summary>
-        List<IEFCoreSelectRepository<T>> Readonlys { get; set; }
+        List<ISelectRepository<T>> Readonlys { get; }
 
         /// <summary>
         /// 执行存储过程

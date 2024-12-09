@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using OneForAll.EFCore;
 
 namespace UnitTest.Host.Controllers
 {
@@ -15,14 +16,20 @@ namespace UnitTest.Host.Controllers
         [HttpGet]
         public async Task<IEnumerable<Order>> GetAsync()
         {
-            var data = await _repository.Readonly.GetListAsync(w => w.Id == 1);
+            var data = await _repository.GetListAsync(w => w.Id == 1);
             if (!data.Any())
             {
-                var effected = await _repository.AddAsync(new Order { ProductName = "²âÊÔ¶©µ¥", TotalPrice = 0.01m, CreateTime = DateTime.Now });
+                var effected = await _repository.AddAsync(new Order { ProductName = "¶©µ¥", TotalPrice = 0.01m, CreateTime = DateTime.Now });
                 if (effected > 0)
-                    data = await _repository.Readonlys[0].GetListAsync(w => w.Id == 1);
+                    data = await _repository.Readonly.GetListAsync(w => w.Id == 1);
             }
             return data;
-        }
+
+            using (var tran = new UnitOfWork().BeginTransaction())
+            {
+                await _repository.AddAsync(new Order { ProductName = "¶©µ¥", TotalPrice = 0.01m, CreateTime = DateTime.Now }, tran);
+                await _repository2.AddAsync(new Order { ProductName = "¶©µ¥Ã÷Ï¸", TotalPrice = 0.01m, CreateTime = DateTime.Now }, tran);
+                var effected = tran.Commit();
+            }
     }
 }

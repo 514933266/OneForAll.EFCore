@@ -26,7 +26,7 @@
     <PackageReference Include="EFCore.BulkExtensions" Version="8.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
-    <PackageReference Include="OneForAll.Core" Version="2.0.0-net8" />
+    <PackageReference Include="OneForAll.Core" Version="2.0.2" />
   </ItemGroup>
 
 </Project>
