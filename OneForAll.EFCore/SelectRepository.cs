@@ -8,7 +8,10 @@ using System.Threading.Tasks;
 
 namespace OneForAll.EFCore
 {
-    partial class Repository<T>
+    /// <summary>
+    /// 查询
+    /// </summary>
+    public partial class Repository<T>
     {
         /// <summary>
         /// 查询指定实体(追踪)

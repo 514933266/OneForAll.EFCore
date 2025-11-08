@@ -5,7 +5,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using EFCore.BulkExtensions;
-using OneForAll.Core.DDD;
 
 namespace OneForAll.EFCore
 {

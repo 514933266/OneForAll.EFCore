@@ -11,7 +11,7 @@ namespace OneForAll.EFCore
     /// <summary>
     /// 添加
     /// </summary>
-    public interface IEFCoreAddRepository<T>
+    public interface IEFCoreAddRepository<T> where T : class, new()
     {
         /// <summary>
         /// 添加

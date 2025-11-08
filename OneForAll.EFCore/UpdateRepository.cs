@@ -1,15 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-using OneForAll.Core;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using OneForAll.Core.ORM;
-using OneForAll.Core.Utility;
-using OneForAll.Core.Extension;
 using EFCore.BulkExtensions;
 using System.Threading.Tasks;
-using OneForAll.Core.DDD;
 
 namespace OneForAll.EFCore
 {

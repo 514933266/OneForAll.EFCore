@@ -23,6 +23,12 @@ namespace OneForAll.EFCore
             Exceptions = new HashSet<Exception>();
         }
 
+        /// <summary>
+        /// 创建事务
+        /// </summary>
+        /// <param name="transactionType"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public IUnitTransaction BeginTransaction(TransactionType transactionType = TransactionType.Local)
         {
             IUnitTransaction tran = null;
@@ -38,6 +44,9 @@ namespace OneForAll.EFCore
             return tran;
         }
 
+        /// <summary>
+        /// 回收
+        /// </summary>
         public void Dispose()
         {
             foreach (var tran in _transactions)
@@ -46,6 +55,11 @@ namespace OneForAll.EFCore
             }
         }
 
+        /// <summary>
+        /// 提交事务
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
         public int Commit()
         {
             if (_commited)
@@ -75,6 +89,11 @@ namespace OneForAll.EFCore
             return _effected;
         }
 
+        /// <summary>
+        /// 提交事务
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
         public async Task<int> CommitAsync()
         {
             if (_commited)
@@ -104,6 +123,9 @@ namespace OneForAll.EFCore
             return _effected;
         }
 
+        /// <summary>
+        /// 回滚
+        /// </summary>
         public void RollBack()
         {
             if (_transactions != null)

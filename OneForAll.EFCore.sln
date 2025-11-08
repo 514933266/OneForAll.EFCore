@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29102.190
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35506.116 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneForAll.EFCore", "OneForAll.EFCore\OneForAll.EFCore.csproj", "{AFB785EF-7FB1-4588-B3F8-F49A0E3F3FA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest.Host", "UnitTest.Host\UnitTest.Host.csproj", "{5038405A-F90E-4448-BC97-12338053AAC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{AFB785EF-7FB1-4588-B3F8-F49A0E3F3FA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFB785EF-7FB1-4588-B3F8-F49A0E3F3FA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFB785EF-7FB1-4588-B3F8-F49A0E3F3FA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5038405A-F90E-4448-BC97-12338053AAC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5038405A-F90E-4448-BC97-12338053AAC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5038405A-F90E-4448-BC97-12338053AAC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5038405A-F90E-4448-BC97-12338053AAC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
