@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ApplicationIcon />
+    <OutputType>Library</OutputType>
+    <StartupObject />
+    <AssemblyName>OneForAll.EFCore</AssemblyName>
+    <Authors>xhp</Authors>
+    <Company>xhp</Company>
+    <Description>OneForAll系列ORM：基于 EFCore</Description>
+    <Copyright>xhp</Copyright>
+    <PackageProjectUrl>https://github.com/514933266/OneForAll.EFCore</PackageProjectUrl>
+    <PackageLicenseExpression></PackageLicenseExpression>
+    <Version>1.0.99</Version>
+    <FileVersion>1.0.99</FileVersion>
+    <AssemblyVersion>1.0.99</AssemblyVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EFCore.BulkExtensions" Version="6.8.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.33" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.33" />
+    <PackageReference Include="OneForAll.Core" Version="1.0.99" />
+  </ItemGroup>
+
+</Project>
