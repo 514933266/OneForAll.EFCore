@@ -12,9 +12,9 @@
     <Copyright>xhp</Copyright>
     <PackageProjectUrl>https://github.com/514933266/OneForAll.EFCore</PackageProjectUrl>
     <PackageLicenseExpression></PackageLicenseExpression>
-    <Version>1.0.99</Version>
-    <FileVersion>1.0.99</FileVersion>
-    <AssemblyVersion>1.0.99</AssemblyVersion>
+    <Version>1.1.99</Version>
+    <FileVersion>1.1.99</FileVersion>
+    <AssemblyVersion>1.1.99</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -24,9 +24,9 @@
 
   <ItemGroup>
     <PackageReference Include="EFCore.BulkExtensions" Version="6.8.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.33" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.33" />
-    <PackageReference Include="OneForAll.Core" Version="1.0.99" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.36" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.36" />
+    <PackageReference Include="OneForAll.Core" Version="1.1.99" />
   </ItemGroup>
 
 </Project>
